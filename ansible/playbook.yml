@@ -1,0 +1,19 @@
+---
+- name: Build and deploy Spring Boot Docker container
+  hosts: localhost
+  tasks:
+
+    - name: Build Docker image for Spring Boot Hello World app
+      docker_image:
+        name: spring-boot-helloworld-ansible
+        build:
+          path: ../   # Path to the directory containing Dockerfile
+        source: build
+
+    - name: Run the Spring Boot Docker container
+      docker_container:
+        name: spring-boot-helloworld-ansible
+        image: spring-boot-helloworld-ansible
+        state: started
+        ports:
+          - "8080:8080"
